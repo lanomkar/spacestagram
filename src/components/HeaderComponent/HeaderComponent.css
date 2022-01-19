@@ -1,0 +1,10 @@
+.main-header {
+  background-color: #fff;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+  margin-bottom: 17px;
+}
+.header-title {
+  max-width: 570px;
+  margin: 0 auto;
+  padding: 15px 0px;
+}

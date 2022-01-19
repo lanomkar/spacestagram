@@ -1,0 +1,44 @@
+.cameras-select {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+select-form {
+  appearance: none;
+  outline: 0;
+  border: 0;
+  box-shadow: none;
+  flex: 1;
+  padding: 0 1em;
+  color: #fff;
+  background-color: var(--darkgray);
+  background-image: none;
+}
+
+select-form::-ms-expand {
+  display: none;
+}
+
+.select-form {
+  position: relative;
+  width: 20em;
+  height: 3em;
+  border-radius: 0.25em;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.select-form::after {
+  content: "\25BC";
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1em;
+  background-color: #34495e;
+  transition: 0.25s all ease;
+  pointer-events: none;
+}
+
+.select-form:hover::after {
+  color: #f39c12;
+}
