@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import axios from "axios";
 import { useInfiniteQuery } from "react-query";
 import LoaderComponent from "../LoaderComponent/LoaderComponent";
@@ -20,6 +20,7 @@ const fetchImages = ({ pageParam = 1, queryKey }) => {
 };
 
 const ImagesFeedComponent = ({ camera }) => {
+  const elementRef = useRef(null);
   const {
     data,
     fetchNextPage,
@@ -37,6 +38,28 @@ const ImagesFeedComponent = ({ camera }) => {
       return nextPageNo + 1;
     },
   });
+
+  function onIntersection(entries) {
+    const firstEntry = entries[0];
+    if (firstEntry.isIntersecting && hasNextPage) {
+      fetchNextPage();
+    }
+  }
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(onIntersection);
+
+    if (observer && elementRef.current) {
+      console.log("CALLING");
+      observer.observe(elementRef.current);
+    }
+
+    return () => {
+      if (observer) {
+        observer.disconnect();
+      }
+    };
+  }, [data]);
 
   if (isLoading) {
     return <LoaderComponent />;
@@ -63,19 +86,6 @@ const ImagesFeedComponent = ({ camera }) => {
           );
         })}
       </div>
-      <div>
-        {hasNextPage && !isFetchingNextPage ? (
-          <div className="centerTheButton">
-            <button
-              className="loadmore-btn"
-              disabled={!hasNextPage || isFetchingNextPage}
-              onClick={() => fetchNextPage()}
-            >
-              Load more
-            </button>
-          </div>
-        ) : null}
-      </div>
       <div>{isFetching && isFetchingNextPage && <LoaderComponent />}</div>
       <div>
         {(data.pages[0].data.photos.length === 0 || !hasNextPage) && (
@@ -83,6 +93,19 @@ const ImagesFeedComponent = ({ camera }) => {
             <h6>No more Images</h6>
           </div>
         )}
+      </div>
+      <div>
+        {hasNextPage && !isFetchingNextPage ? (
+          <div ref={elementRef} className="centerTheButton">
+            {/* <button
+              className="loadmore-btn"
+              disabled={!hasNextPage || isFetchingNextPage}
+              onClick={() => fetchNextPage()}
+            >
+              Load more
+            </button> */}
+          </div>
+        ) : null}
       </div>
     </div>
   );

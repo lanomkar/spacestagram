@@ -10,8 +10,10 @@ const ImageCardComponent = ({ imageDetail, islike }) => {
           <img
             src={imageDetail.img_src}
             alt={`Mars Image taken by ${imageDetail.camera.full_name}-${imageDetail.id}`}
-            width="100%"
             className="image-style"
+            loading="lazy"
+            width="100%"
+            height="200"
           />
         </div>
         <div className="image-details">
