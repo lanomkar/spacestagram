@@ -8,10 +8,6 @@ function FeedComponent() {
 
   return (
     <>
-      <div className="api-title">
-        <h4>Brought to by NASA's Mars Rover Photos API</h4>
-      </div>
-
       <TypeOfCamerasComponent
         value={camera}
         handleCameraChange={(e) => setCamera(e.target.value)}
